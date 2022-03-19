@@ -1,0 +1,41 @@
+package br.com.fiap.smartcities.testes;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
+import br.com.fiap.smartcities.domain.Alergia;
+import br.com.fiap.smartcities.domain.Usuario;
+
+public class InserirTest {
+
+	public static void main(String[] args) {
+		
+		EntityManager em = null;
+
+		try { 
+			
+			em = Persistence.createEntityManagerFactory("smartcities-orm").createEntityManager();
+			em.getTransaction().begin();
+			Usuario usuario = new Usuario();
+			usuario.setNome("Maria da Silva");
+			
+			Alergia alergia = new Alergia();
+			alergia.setDescricaoAlergia("Alergia a dipirona");
+			
+			em.persist(usuario);
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (em != null && em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			if (em != null) {
+				em.close();
+			}
+		}
+		
+	}
+
+}

@@ -1,0 +1,103 @@
+package br.com.fiap.smartcities.domain;
+
+import java.util.Calendar;
+import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+@Entity
+@Table(name = "tb_alergia")
+public class Alergia {
+
+	@Id
+	@SequenceGenerator(name="alergia",sequenceName="sq_tb_alergia",allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="contato")
+	@Column(name = "cd_alergia")
+	private Integer id;
+
+	@Column(name = "ds_alergia", length=200,nullable=false)
+	private String descricaoAlergia;
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dh_criacao")
+	private Calendar dataCriacao;
+	
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dh_atualizacao")
+	private Calendar dataAtualizacao;
+	
+	@JoinColumn(name="cd_contato")
+	@OneToMany
+	private Collection<Contato> contatos;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescricaoAlergia() {
+		return descricaoAlergia;
+	}
+
+	public void setDescricaoAlergia(String descricaoAlergia) {
+		this.descricaoAlergia = descricaoAlergia;
+	}
+
+	public Calendar getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(Calendar dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public Calendar getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(Calendar dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Collection<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(Collection<Contato> contatos) {
+		this.contatos = contatos;
+	}
+
+	public Alergia(Integer id, String descricaoAlergia, Calendar dataCriacao, Calendar dataAtualizacao,
+			Collection<Contato> contatos) {
+		super();
+		this.id = id;
+		this.descricaoAlergia = descricaoAlergia;
+		this.dataCriacao = dataCriacao;
+		this.dataAtualizacao = dataAtualizacao;
+		this.contatos = contatos;
+	}
+
+	public Alergia() {
+		super();
+	}
+
+	
+}
