@@ -1,12 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="br.com.fiap.smartcities.domain.Usuario"/>
-    <fullyQualifiedTypeName name="br.com.fiap.smartcities.domain.Alergia"/>
-    <fullyQualifiedTypeName name="javax.persistence.OneToMany"/>
-    <fullyQualifiedTypeName name="java.util.Collection"/>
-    <fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
-    <fullyQualifiedTypeName name="javax.persistence.ManyToOne"/>
-    <fullyQualifiedTypeName name="br.com.fiap.enjoy.domain.Cliente"/>
-    <fullyQualifiedTypeName name="br.com.fiap.enjoy.domain.Bebida"/>
-    <fullyQualifiedTypeName name="br.com.fiap.enjoy.domain.Estabelecimento"/>
-</qualifiedTypeNameHistroy>
+<qualifiedTypeNameHistroy/>
