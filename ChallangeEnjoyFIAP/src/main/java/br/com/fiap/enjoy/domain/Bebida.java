@@ -1,14 +1,12 @@
 package br.com.fiap.enjoy.domain;
 
-import java.util.Calendar;
-import java.util.Collection;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,33 +31,21 @@ public class Bebida {
 	private String tipo;
 	
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_criacao")
-	private Calendar dataCriacao;
+	private LocalDate dataCriacao;
 	
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_atualizacao")
-	private Calendar dataAtualizacao;
-		
-	@OneToMany (mappedBy = "bebida")
-	private Collection<Cliente> clientes;
-	
-	//constructors, getters and setters
+	private LocalDate dataAtualizacao;
 
-	public Bebida() {
-		super();
-	}
-
-	public Bebida(Integer id, Double valor, String tipo, Calendar dataCriacao, Calendar dataAtualizacao,
-			Collection<Cliente> clientes) {
-		super();
+	public Bebida(Integer id, Double valor, String tipo, LocalDate dataCriacao, LocalDate dataAtualizacao) {
 		this.id = id;
 		this.valor = valor;
 		this.tipo = tipo;
 		this.dataCriacao = dataCriacao;
 		this.dataAtualizacao = dataAtualizacao;
-		this.clientes = clientes;
 	}
 
 	public Integer getId() {
@@ -86,33 +72,34 @@ public class Bebida {
 		this.tipo = tipo;
 	}
 
-	public Calendar getDataCriacao() {
+	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Calendar dataCriacao) {
+	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
-	public Calendar getDataAtualizacao() {
+	public LocalDate getDataAtualizacao() {
 		return dataAtualizacao;
 	}
 
-	public void setDataAtualizacao(Calendar dataAtualizacao) {
+	public void setDataAtualizacao(LocalDate dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Collection<Cliente> getClientes() {
-		return clientes;
-	}
-
-	public void setClientes(Collection<Cliente> clientes) {
-		this.clientes = clientes;
+	public Bebida() {
+		super();
 	}
 	
 	@Override
 	public String toString() {
-		return "Consumo [id=" + id + ", valor=" + valor + ", tipo=" + tipo + "]";
+		return "Bebida{" +
+				"id=" + id +
+				", valor=" + valor +
+				", tipo='" + tipo + '\'' +
+				", dataCriacao=" + dataCriacao +
+				", dataAtualizacao=" + dataAtualizacao +
+				'}';
 	}
-
 }

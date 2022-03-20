@@ -1,18 +1,10 @@
 package br.com.fiap.enjoy.domain;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -52,30 +44,37 @@ public class Cliente {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_atualizacao")
 	private Calendar dataAtualizacao;
-	
-	@JoinColumn(name="cd_bebida")
-	@ManyToOne
-	private Bebida bebida;
-	
-	@JoinColumn(name="cd_estabelecimento")
-	@ManyToOne
-	private Estabelecimento estabelecimento;
-	
-	/*
-	@JoinColumn(name="cd_usuario")
-	@ManyToOne
-	private Usuario usuario;
-	
-	@OneToMany(mappedBy = "contato")
-	private Collection<Vacina> vacinas;
-	*/
-	
-	//constructors, getters and setters
-	
+
+	@ManyToMany
+	@JoinTable(joinColumns = @JoinColumn(name = "cd_cliente"),
+			inverseJoinColumns = @JoinColumn(name = "cd_bebida"),
+			name = "tb_bebida_cliente")
+	private List<Bebida> bebidas;
+
+	@ManyToMany
+	@JoinTable(joinColumns = @JoinColumn(name = "cd_cliente"),
+			inverseJoinColumns = @JoinColumn(name = "cd_estabelecimento"),
+			name = "tb_estabelecimento_cliente")
+	private List<Estabelecimento> estabecimentos;
+
+	public Cliente() {
+	}
+
+	public Cliente(Integer id, String nome, String telefone, Double consumo, String choppFavorito, Calendar dataVisita, Calendar dataCriacao, Calendar dataAtualizacao) {
+		this.id = id;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.consumo = consumo;
+		this.choppFavorito = choppFavorito;
+		this.dataVisita = dataVisita;
+		this.dataCriacao = dataCriacao;
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -136,44 +135,29 @@ public class Cliente {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Bebida getBebida() {
-		return bebida;
+	public List<Bebida> getBebidas() {
+		//Devolve uma lista somente para leitura, para alterar a lista precisa do método especifico adicionaBebidas
+		return Collections.unmodifiableList(bebidas);
+	}
+	public void adicionaBebidas(Bebida bebida) {
+		this.bebidas.add(bebida);
 	}
 
-	public void setBebida(Bebida bebida) {
-		this.bebida = bebida;
+	public void setBebidas(List<Bebida> bebidas) {
+		this.bebidas = bebidas;
 	}
 
-	public Estabelecimento getEstabelecimento() {
-		return estabelecimento;
+	public List<Estabelecimento> getEstabecimentos() {
+		//Devolve uma lista somente para leitura, para alterar a lista precisa do método especifico adicionaEstabelecimento
+		return Collections.unmodifiableList(estabecimentos);
 	}
 
-	public void setEstabelecimento(Estabelecimento estabelecimento) {
-		this.estabelecimento = estabelecimento;
+	public void adicionaEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabecimentos.add(estabelecimento);
 	}
 
-	public Cliente() {
-		super();
-	}
-
-	public Cliente(Integer id, String nome, String telefone, Double consumo, String choppFavorito, Calendar dataVisita,
-			Calendar dataCriacao, Calendar dataAtualizacao, Bebida bebida, Estabelecimento estabelecimento) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.telefone = telefone;
-		this.consumo = consumo;
-		this.choppFavorito = choppFavorito;
-		this.dataVisita = dataVisita;
-		this.dataCriacao = dataCriacao;
-		this.dataAtualizacao = dataAtualizacao;
-		this.bebida = bebida;
-		this.estabelecimento = estabelecimento;
+	public void setEstabecimentos(List<Estabelecimento> estabecimentos) {
+		this.estabecimentos = estabecimentos;
 	}
 	
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", dataCriacao=" + dataCriacao + "]";
-	}
-
 }

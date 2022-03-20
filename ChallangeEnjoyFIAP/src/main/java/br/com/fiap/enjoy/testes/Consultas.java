@@ -17,13 +17,23 @@ public class Consultas {
 
 		try { 
 			
-			int idProcurado = 35998121061;
+			int idProcurado = 998121061;
 			
 			em = Persistence.createEntityManagerFactory("smartcities-orm").createEntityManager();
 			
 			Cliente cliente = em.find(Cliente.class, idProcurado);
-			
-			Query query = em.createQuery("from Consumo where cliente = :id ");
+		
+            List<Cliente> ultimaVisita = em.createNativeQuery("SELECT * FROM TB_CLIENTE A \n"
+            		+ "inner join tb_estabelecimento_cliente B on A.cd_cliente = B.cd_cliente \n"
+            		+ "inner join tb_estabelecimento C on B.cd_estabelecimento = C.cd_estabelecimento  \n"
+            		+ "where A.nm_nome = 'Maria da Silva'\n"
+            		+ "order by A.dt_datavisita desc ").getResultList();
+           
+            
+            System.out.println("Data de última visita: " + ultimaVisita.get(0));
+            
+            /*
+        	Query query = em.createQuery("from Consumo where cliente = :id ");
 			query.setParameter("id", "35998121061");
 			List list = query.list();
 			
@@ -33,16 +43,13 @@ public class Consultas {
 
             List<Cliente> clientes = em.createQuery("from Cliente where sexo = 'M'", Cliente.class).getResultList();
             
-            Query qExample = em.createNativeQuery("SELECT a.firstname, a.lastname FROM Author a");
-            List<Object[]> authors = qExample.getResultList();
-           
             
             for (Cliente clientee : clientes) {
     			System.out.println("Nome: " + cliente.getNome());
     			System.out.println("Consumo: " + cliente.getConsumo());
     			System.out.println("----------------------------");
     		}
-
+             */
 			
 		} catch (Exception e) {
 			e.printStackTrace();

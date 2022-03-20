@@ -1,15 +1,13 @@
 package br.com.fiap.enjoy.domain;
 
+import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,6 +29,11 @@ public class Estabelecimento {
 	private String nomeEstabelecimento;
 	
 	@CreationTimestamp
+	//@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "dt_visita")
+	private LocalDate dataVisita;
+	
+	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_criacao")
 	private Calendar dataCriacao;
@@ -39,12 +42,19 @@ public class Estabelecimento {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_atualizacao")
 	private Calendar dataAtualizacao;
+
+	public Estabelecimento() {
+	}
 	
-	@JoinColumn(name="cd_cliente")
-	@OneToMany
-	private Collection<Cliente> clientes;
-	
-	//constructors, getters and setters
+	public Estabelecimento(Integer id, String nomeEstabelecimento, LocalDate dataVisita, Calendar dataCriacao,
+			Calendar dataAtualizacao) {
+		super();
+		this.id = id;
+		this.nomeEstabelecimento = nomeEstabelecimento;
+		this.dataVisita = dataVisita;
+		this.dataCriacao = dataCriacao;
+		this.dataAtualizacao = dataAtualizacao;
+	}
 
 	public Integer getId() {
 		return id;
@@ -54,12 +64,21 @@ public class Estabelecimento {
 		this.id = id;
 	}
 
-	public String getnomeEstabelecimento() {
+	public String getNomeEstabelecimento() {
 		return nomeEstabelecimento;
 	}
 
-	public void setNomeEstabelecimento(String nomeEstilo) {
-		this.nomeEstabelecimento = nomeEstilo;
+	public void setNomeEstabelecimento(String nomeEstabelecimento) {
+		this.nomeEstabelecimento = nomeEstabelecimento;
+	}
+
+
+	public LocalDate getDataVisita() {
+		return dataVisita;
+	}
+
+	public void setDataVisita(LocalDate dataVisita) {
+		this.dataVisita = dataVisita;
 	}
 
 	public Calendar getDataCriacao() {
@@ -78,26 +97,13 @@ public class Estabelecimento {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public Collection<Cliente> getClientes() {
-		return clientes;
+	@Override
+	public String toString() {
+		return "Estabelecimento{" +
+				"id=" + id +
+				", nomeEstabelecimento='" + nomeEstabelecimento + '\'' +
+				", dataCriacao=" + dataCriacao +
+				", dataAtualizacao=" + dataAtualizacao +
+				'}';
 	}
-
-	public void setClientes(Collection<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
-	public Estabelecimento(Integer id, String nomeEstabelecimento, Calendar dataCriacao, Calendar dataAtualizacao,
-			Collection<Cliente> clientes) {
-		super();
-		this.id = id;
-		this.nomeEstabelecimento = nomeEstabelecimento;
-		this.dataCriacao = dataCriacao;
-		this.dataAtualizacao = dataAtualizacao;
-		this.clientes = clientes;
-	}
-
-	public Estabelecimento() {
-		super();
-	}
-		
 }
