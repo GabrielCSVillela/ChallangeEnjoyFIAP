@@ -1,7 +1,6 @@
 package br.com.fiap.enjoy.domain;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 

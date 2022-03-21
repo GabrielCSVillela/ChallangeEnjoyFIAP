@@ -7,6 +7,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import br.com.fiap.enjoy.domain.Cliente;
+import br.com.fiap.enjoy.domain.dto.BebidaDTO;
 import br.com.fiap.enjoy.domain.dto.ClienteDTO;
 
 public class Consultas {
@@ -62,6 +63,54 @@ public class Consultas {
 				System.out.println("Data da ultima visita: " + cli.getDataVisita()); 
 				System.out.println("------------------------------------"); 
 			});
+						
+			Query queryTm = em.createNativeQuery("SELECT AVG(beb.VL_VALOR) "
+					+ "FROM TB_CLIENTE cli "
+					+ "INNER JOIN TB_BEBIDA_CLIENTE lig ON lig.CD_CLIENTE = cli.CD_CLIENTE "
+					+ "INNER JOIN TB_BEBIDA beb ON beb.CD_BEBIDA = lig.CD_BEBIDA "
+					+ "INNER JOIN TB_ESTABELECIMENTO_CLIENTE ligEst ON ligEst.CD_CLIENTE = cli.CD_CLIENTE "
+					+ "INNER JOIN TB_ESTABELECIMENTO est ON est.CD_ESTABELECIMENTO = ligEst.CD_ESTABELECIMENTO "
+					+ "WHERE est.CD_ESTABELECIMENTO = ?1", BebidaDTO.class)
+				 .setParameter(1, 1);
+		 
+			List<BebidaDTO> ticketMedio = (List<BebidaDTO>)queryTm.getResultList();
+			
+			System.out.println(""); 
+			System.out.println(""); 
+			System.out.println(""); 
+
+			ticketMedio.forEach(beb -> {			
+				System.out.println("TICKET MÉDIO"); 
+				System.out.println("------------------------------------"); 
+				System.out.println("Tipo de Bebida: " + beb.getTipo()); 
+				System.out.println("Ticket médio gasto neste Estabelecimento: " + beb.getValor()); 
+				System.out.println("------------------------------------"); 
+			});
+			
+			
+			Query queryBf = em.createNativeQuery("SELECT SUM((C.vl_valor * cli.vl_consumo)) "
+					+ "AS Valor_Total, C.ds_tipo\r\n"
+					+ "FROM TB_CLIENTE cli \r\n"
+					+ "inner join tb_bebida_cliente B on cli.cd_cliente = B.cd_cliente \r\n"
+					+ "inner join tb_bebida C on B.cd_bebida = C.cd_bebida \r\n"
+					+ "where cli.cd_cliente = ?1\r\n"
+					+ "group by (C.ds_tipo)", ClienteDTO.class)
+				 .setParameter(1, 1);
+		 
+			List<ClienteDTO> bebidaFavorita = (List<ClienteDTO>)queryBf.getResultList();
+			
+			System.out.println(""); 
+			System.out.println(""); 
+			System.out.println(""); 
+
+			bebidaFavorita.forEach(cli -> {			
+				System.out.println("BEBIDA FAVORITA"); 
+				System.out.println("------------------------------------");
+				System.out.println("Cliente: " + cli.getNome()); 
+				System.out.println("Bebida favorita: " + cli.getChoppFavorito()); 
+				System.out.println("------------------------------------"); 
+			});
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

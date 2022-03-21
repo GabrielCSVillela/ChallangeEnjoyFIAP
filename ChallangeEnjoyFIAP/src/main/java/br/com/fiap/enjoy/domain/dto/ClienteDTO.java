@@ -1,7 +1,6 @@
 package br.com.fiap.enjoy.domain.dto;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,8 +17,8 @@ import org.hibernate.annotations.CreationTimestamp;
 public class ClienteDTO {
 	
 		@Id
-		@SequenceGenerator(name="cliente",sequenceName="sq_tb_cliente",allocationSize=1)
-		@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="cliente")
+		@SequenceGenerator(name="clienteDTO",sequenceName="sq_tb_cliente",allocationSize=1)
+		@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="clienteDTO")
 		@Column(name = "cd_cliente")
 		private Integer id;
 

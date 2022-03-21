@@ -1,4 +1,4 @@
-package br.com.fiap.enjoy.domain;
+package br.com.fiap.enjoy.domain.dto;
 
 import java.time.LocalDate;
 
@@ -14,11 +14,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "tb_bebida")
-public class Bebida {
+public class BebidaDTO {
 
 	@Id
-	@SequenceGenerator(name="bebida",sequenceName="sq_tb_bebida",allocationSize=1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="bebida")
+	@SequenceGenerator(name="bebidaDTO",sequenceName="sq_tb_bebida",allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="bebidaDTO")
 	@Column(name = "cd_bebida")
 	private Integer id;
 
@@ -37,14 +37,6 @@ public class Bebida {
 	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_atualizacao")
 	private LocalDate dataAtualizacao;
-
-	public Bebida(Integer id, Double valor, String tipo, LocalDate dataCriacao, LocalDate dataAtualizacao) {
-		this.id = id;
-		this.valor = valor;
-		this.tipo = tipo;
-		this.dataCriacao = dataCriacao;
-		this.dataAtualizacao = dataAtualizacao;
-	}
 
 	public Integer getId() {
 		return id;
@@ -84,10 +76,6 @@ public class Bebida {
 
 	public void setDataAtualizacao(LocalDate dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
-	}
-
-	public Bebida() {
-		super();
 	}
 	
 	@Override
