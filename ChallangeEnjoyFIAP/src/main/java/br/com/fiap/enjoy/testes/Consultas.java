@@ -1,5 +1,6 @@
 package br.com.fiap.enjoy.testes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -121,11 +122,13 @@ public class Consultas {
 			List<ClienteDTO> bebidaFavorita = (List<ClienteDTO>)queryBf.getResultList();
 			
 			double valorCadaBebida, somaBebFav = 0;
+			ArrayList somaBebFavList = new ArrayList<Double>();
 			for(int i = 0; i< ticketMedio.size(); i++) {
 				valorCadaBebida = ticketMedio.get(i).getValor();
 				
 				for (int j=0; j < bebidaFavorita.size(); j++) {
 					somaBebFav = somaBebFav + (valorCadaBebida * bebidaFavorita.get(j).getConsumo());
+					somaBebFavList.add(somaBebFav);
 				}
 			}
 		
@@ -138,7 +141,7 @@ public class Consultas {
 				System.out.println("------------------------------------");
 				System.out.println("Lista: " + bebidaFavorita); 
 				System.out.println("Cliente: " + cli.getNome()); 
-				System.out.println("SomaBebFav: " + somaBebFav); 
+				System.out.println("Gasto do cliente em sua bebida favorita: " + somaBebFavList.get(0)); 
 				System.out.println("Bebida favorita: " + cli.getChoppFavorito()); 
 				System.out.println("------------------------------------"); 
 			});
