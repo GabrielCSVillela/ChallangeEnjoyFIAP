@@ -1,5 +1,6 @@
 package br.com.fiap.enjoy.domain;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -27,23 +28,20 @@ public class Cliente {
 	@Column(name = "vl_consumo")
 	private Double consumo;
 	
-	@Column(name = "nm_choppFavorito", length = 100)
+	@Column(name = "nm_choppfavorito", length = 100)
 	private String choppFavorito;
 	
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "dt_dataVisita")
-	private Calendar dataVisita;
+	@Column(name = "dt_datavisita")
+	private LocalDate dataVisita;
 	
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_criacao")
-	private Calendar dataCriacao;
+	private LocalDate dataCriacao;
 	
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "dh_atualizacao")
-	private Calendar dataAtualizacao;
+	private LocalDate dataAtualizacao;
 
 	@ManyToMany
 	@JoinTable(joinColumns = @JoinColumn(name = "cd_cliente"),
@@ -60,7 +58,7 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(Integer id, String nome, String telefone, Double consumo, String choppFavorito, Calendar dataVisita, Calendar dataCriacao, Calendar dataAtualizacao) {
+	public Cliente(Integer id, String nome, String telefone, Double consumo, String choppFavorito, LocalDate dataVisita, LocalDate dataCriacao, LocalDate dataAtualizacao) {
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -111,27 +109,27 @@ public class Cliente {
 		this.choppFavorito = choppFavorito;
 	}
 
-	public Calendar getDataVisita() {
+	public LocalDate getDataVisita() {
 		return dataVisita;
 	}
 
-	public void setDataVisita(Calendar dataVisita) {
+	public void setDataVisita(LocalDate dataVisita) {
 		this.dataVisita = dataVisita;
 	}
 
-	public Calendar getDataCriacao() {
+	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Calendar dataCriacao) {
+	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
-	public Calendar getDataAtualizacao() {
+	public LocalDate getDataAtualizacao() {
 		return dataAtualizacao;
 	}
 
-	public void setDataAtualizacao(Calendar dataAtualizacao) {
+	public void setDataAtualizacao(LocalDate dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
@@ -159,5 +157,12 @@ public class Cliente {
 	public void setEstabecimentos(List<Estabelecimento> estabecimentos) {
 		this.estabecimentos = estabecimentos;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", consumo=" + consumo
+				+ ", choppFavorito=" + choppFavorito + ", dataVisita=" + dataVisita + ", dataCriacao=" + dataCriacao
+				+ ", dataAtualizacao=" + dataAtualizacao + ", bebidas=" + bebidas + ", estabecimentos=" + estabecimentos
+				+ "]";
+	}	
 }
